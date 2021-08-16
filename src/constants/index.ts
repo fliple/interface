@@ -3,7 +3,10 @@ import { AbstractConnector } from '@web3-react/abstract-connector'
 
 import { injected, walletconnect } from '../connectors'
 
-export const ROUTER_ADDRESS = '0x3D8B4c42EbB9bA0336358C64f1bFE178DFE52623'
+export const ROUTER_ADDRESS = {
+  [ChainId.POA]: '0x3D8B4c42EbB9bA0336358C64f1bFE178DFE52623',
+  [ChainId.SOKOL]: '0x816E75B3327F1Db55cB17F3808c7fBF38B8413A0'
+}
 
 // a list of tokens by chain
 type ChainTokenList = {
@@ -11,13 +14,13 @@ type ChainTokenList = {
 }
 
 const WETH_ONLY: ChainTokenList = {
-  [ChainId.MAINNET]: [WETH[ChainId.MAINNET]]
+  [ChainId.POA]: [WETH[ChainId.POA]],
+  [ChainId.SOKOL]: [WETH[ChainId.SOKOL]]
 }
 
 // used to construct intermediary pairs for trading
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
-  ...WETH_ONLY,
-  [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET]] //, DAI, USDC, USDT, WBTC, RUNE]
+  ...WETH_ONLY
 }
 
 /**
@@ -25,37 +28,22 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
  * tokens.
  */
 export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: Token[] } } = {
-  [ChainId.MAINNET]: {
-    // [AMPL.address]: [DAI, WETH[ChainId.MAINNET]],
-    // [DUCK.address]: [USDP, WETH[ChainId.MAINNET]],
-    // [BAB.address]: [BAC, WETH[ChainId.MAINNET]],
-    // [HBTC.address]: [CREAM, WETH[ChainId.MAINNET]],
-    // [FRAX.address]: [FXS, WETH[ChainId.MAINNET]],
-    // [ibETH.address]: [ALPHA, WETH[ChainId.MAINNET]],
-  }
+  [ChainId.POA]: {}
 }
 
 // used for display in the default list when adding liquidity
 export const SUGGESTED_BASES: ChainTokenList = {
-  ...WETH_ONLY,
-  [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET]] //, DAI, USDC, USDT, WBTC]
+  ...WETH_ONLY
 }
 
 // used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   ...WETH_ONLY,
-  [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET]] //, DAI, USDC, USDT, WBTC]
+  [ChainId.POA]: [...WETH_ONLY[ChainId.POA]] //, DAI, USDC, USDT, WBTC]
 }
 
 export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {
-  [ChainId.MAINNET]: [
-    // [
-    //   new Token(ChainId.MAINNET, '0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643', 8, 'cDAI', 'Compound Dai'),
-    //   new Token(ChainId.MAINNET, '0x39AA39c021dfbaE8faC545936693aC917d5E7563', 8, 'cUSDC', 'Compound USD Coin')
-    // ],
-    // [USDC, USDT],
-    // [DAI, USDT]
-  ]
+  [ChainId.POA]: []
 }
 
 export interface WalletInfo {

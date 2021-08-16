@@ -116,12 +116,10 @@ const WALLET_VIEWS = {
 
 export default function WalletModal({
   pendingTransactions,
-  confirmedTransactions,
-  ENSName
+  confirmedTransactions
 }: {
   pendingTransactions: string[] // hashes of pending
   confirmedTransactions: string[] // hashes of confirmed
-  ENSName?: string
 }) {
   const { active, account, connector, activate, error } = useWeb3React()
 
@@ -297,7 +295,6 @@ export default function WalletModal({
           toggleWalletModal={toggleWalletModal}
           pendingTransactions={pendingTransactions}
           confirmedTransactions={confirmedTransactions}
-          ENSName={ENSName}
           openOptions={() => setWalletView(WALLET_VIEWS.OPTIONS)}
         />
       )

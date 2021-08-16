@@ -1,7 +1,7 @@
 import { splitSignature } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
 import { TransactionResponse } from '@ethersproject/providers'
-import { Currency, currencyEquals, ETHER, Percent, WETH } from '../../sdk'
+import { ChainId, Currency, currencyEquals, ETHER, Percent, WETH } from '../../sdk'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { ArrowDown, Plus } from 'react-feather'
 import ReactGA from 'react-ga'
@@ -98,7 +98,10 @@ export default function RemoveLiquidity({
 
   // allowance handling
   const [signatureData, setSignatureData] = useState<{ v: number; r: string; s: string; deadline: number } | null>(null)
-  const [approval, approveCallback] = useApproveCallback(parsedAmounts[Field.LIQUIDITY], ROUTER_ADDRESS)
+  const [approval, approveCallback] = useApproveCallback(
+    parsedAmounts[Field.LIQUIDITY],
+    chainId && ROUTER_ADDRESS[chainId]
+  )
 
   async function onAttemptToApprove() {
     if (!pairContract || !pair || !library) throw new Error('missing dependencies')
@@ -133,7 +136,7 @@ export default function RemoveLiquidity({
 
     const message = {
       owner: account,
-      spender: ROUTER_ADDRESS,
+      spender: ROUTER_ADDRESS[chainId as ChainId],
       value: liquidityAmount.raw.toString(),
       nonce: nonce.toHexString(),
       deadline: deadlineForSignature
@@ -148,6 +151,8 @@ export default function RemoveLiquidity({
       primaryType: 'Permit',
       message
     })
+
+    console.log({ account, data })
 
     library
       .send('eth_signTypedData_v4', [account, data])

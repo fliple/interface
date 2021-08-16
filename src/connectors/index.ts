@@ -1,18 +1,17 @@
 import { Web3Provider } from '@ethersproject/providers'
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
+import { ChainId } from '../sdk'
 import { NetworkConnector } from './NetworkConnector'
 
-const NETWORK_URL = process.env.REACT_APP_NETWORK_URL
-
-export const NETWORK_CHAIN_ID: number = parseInt(process.env.REACT_APP_CHAIN_ID ?? '99')
-
-if (typeof NETWORK_URL === 'undefined') {
-  throw new Error(`REACT_APP_NETWORK_URL must be a defined environment variable`)
+const NETWORK_URLS = {
+  [ChainId.POA]: 'https://core.poa.network',
+  [ChainId.SOKOL]: 'https://sokol.poa.network'
 }
 
 export const network = new NetworkConnector({
-  urls: { [NETWORK_CHAIN_ID]: NETWORK_URL }
+  urls: NETWORK_URLS,
+  defaultChainId: 99
 })
 
 let networkLibrary: Web3Provider | undefined
@@ -21,12 +20,12 @@ export function getNetworkLibrary(): Web3Provider {
 }
 
 export const injected = new InjectedConnector({
-  supportedChainIds: [99]
+  supportedChainIds: [99, 77]
 })
 
 // mainnet only
 export const walletconnect = new WalletConnectConnector({
-  rpc: { 99: NETWORK_URL },
+  rpc: NETWORK_URLS,
   bridge: 'https://bridge.walletconnect.org',
   qrcode: true,
   pollingInterval: 15000

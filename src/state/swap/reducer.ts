@@ -10,7 +10,7 @@ export interface SwapState {
   readonly [Field.OUTPUT]: {
     readonly currencyId: string | undefined
   }
-  // the typed recipient address or ENS name, or null if swap should go to sender
+  // the typed recipient address, or null if swap should go to sender
   readonly recipient: string | null
 }
 

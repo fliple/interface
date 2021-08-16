@@ -128,7 +128,8 @@ const MasterChefText = styled.span`
 `*/
 
 const NETWORK_LABELS: { [chainId in ChainId]: string | null } = {
-  [ChainId.MAINNET]: 'POA Core'
+  [ChainId.POA]: 'POA Core',
+  [ChainId.SOKOL]: 'Sokol'
 }
 
 export default function Header() {

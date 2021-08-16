@@ -128,7 +128,7 @@ const AccountControl = styled.div`
   }
 `
 
-const AddressLink = styled(ExternalLink)<{ hasENS: boolean; isENS: boolean }>`
+const AddressLink = styled(ExternalLink)`
   font-size: 0.825rem;
   color: ${({ theme }) => theme.text3};
   margin-left: 1rem;
@@ -207,7 +207,6 @@ interface AccountDetailsProps {
   toggleWalletModal: () => void
   pendingTransactions: string[]
   confirmedTransactions: string[]
-  ENSName?: string
   openOptions: () => void
 }
 
@@ -215,7 +214,6 @@ export default function AccountDetails({
   toggleWalletModal,
   pendingTransactions,
   confirmedTransactions,
-  ENSName,
   openOptions
 }: AccountDetailsProps) {
   const { chainId, account, connector } = useActiveWeb3React()
@@ -290,69 +288,28 @@ export default function AccountDetails({
               </AccountGroupingRow>
               <AccountGroupingRow id="web3-account-identifier-row">
                 <AccountControl>
-                  {ENSName ? (
-                    <>
-                      <div>
-                        {getStatusIcon()}
-                        <p> {ENSName}</p>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div>
-                        {getStatusIcon()}
-                        <p> {account && shortenAddress(account)}</p>
-                      </div>
-                    </>
-                  )}
+                  <div>
+                    {getStatusIcon()}
+                    <p> {account && shortenAddress(account)}</p>
+                  </div>
                 </AccountControl>
               </AccountGroupingRow>
               <AccountGroupingRow>
-                {ENSName ? (
-                  <>
-                    <AccountControl>
-                      <div>
-                        {account && (
-                          <Copy toCopy={account}>
-                            <span style={{ marginLeft: '4px' }}>Copy Address</span>
-                          </Copy>
-                        )}
-                        {chainId && account && (
-                          <AddressLink
-                            hasENS={!!ENSName}
-                            isENS={true}
-                            href={chainId && getEtherscanLink(chainId, ENSName, 'address')}
-                          >
-                            <LinkIcon size={16} />
-                            <span style={{ marginLeft: '4px' }}>View on Blockscout</span>
-                          </AddressLink>
-                        )}
-                      </div>
-                    </AccountControl>
-                  </>
-                ) : (
-                  <>
-                    <AccountControl>
-                      <div>
-                        {account && (
-                          <Copy toCopy={account}>
-                            <span style={{ marginLeft: '4px' }}>Copy Address</span>
-                          </Copy>
-                        )}
-                        {chainId && account && (
-                          <AddressLink
-                            hasENS={!!ENSName}
-                            isENS={false}
-                            href={getEtherscanLink(chainId, account, 'address')}
-                          >
-                            <LinkIcon size={16} />
-                            <span style={{ marginLeft: '4px' }}>View on Blockscout</span>
-                          </AddressLink>
-                        )}
-                      </div>
-                    </AccountControl>
-                  </>
-                )}
+                <AccountControl>
+                  <div>
+                    {account && (
+                      <Copy toCopy={account}>
+                        <span style={{ marginLeft: '4px' }}>Copy Address</span>
+                      </Copy>
+                    )}
+                    {chainId && account && (
+                      <AddressLink href={getEtherscanLink(chainId, account, 'address')}>
+                        <LinkIcon size={16} />
+                        <span style={{ marginLeft: '4px' }}>View on Blockscout</span>
+                      </AddressLink>
+                    )}
+                  </div>
+                </AccountControl>
               </AccountGroupingRow>
             </InfoCard>
           </YourAccount>

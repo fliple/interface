@@ -30,7 +30,7 @@ export default function ListIntroduction({ onSelectList }: { onSelectList: () =>
             alt="token-list-preview"
           />
           <Text style={{ marginBottom: '8px', textAlign: 'center' }}>
-            Fliple supports token lists. You can add your own custom lists via IPFS, HTTPS and ENS.{' '}
+            Fliple supports token lists. You can add your own custom lists via IPFS and HTTPS.{' '}
           </Text>
           <ButtonPrimary onClick={onSelectList} id="list-introduction-choose-a-list">
             {t('chooseAList')}

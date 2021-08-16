@@ -9,11 +9,12 @@ import { ChainId } from './constants'
 import { Token } from './entities/token'
 
 let TOKEN_DECIMALS_CACHE: { [chainId: number]: { [address: string]: number } } = {
-  [ChainId.MAINNET]: {}
+  [ChainId.POA]: {}
 }
 
 const URLS = {
-  [ChainId.MAINNET]: 'https://core.poa.network'
+  [ChainId.POA]: 'https://core.poa.network',
+  [ChainId.SOKOL]: 'https://sokol.poa.network'
 }
 
 /**
