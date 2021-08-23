@@ -121,7 +121,8 @@ export default function WalletModal({
   pendingTransactions: string[] // hashes of pending
   confirmedTransactions: string[] // hashes of confirmed
 }) {
-  const { active, account, connector, activate, error } = useWeb3React()
+  const { active, account, connector, activate, error, chainId } = useWeb3React()
+  console.log({ chainId })
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
 
@@ -281,7 +282,7 @@ export default function WalletModal({
           <HeaderRow>{error instanceof UnsupportedChainIdError ? 'Wrong Network' : 'Error connecting'}</HeaderRow>
           <ContentWrapper>
             {error instanceof UnsupportedChainIdError ? (
-              <h5>Please connect to the appropriate Ethereum network.</h5>
+              <h5>Please connect to an appropriate network.</h5>
             ) : (
               'Error connecting. Try refreshing the page.'
             )}
