@@ -316,8 +316,11 @@ export default function Swap() {
           </AutoColumn>
           <BottomGrouping>
             <p style={{ textAlign: 'center' }}>
-              Swapping on Fliple is disabled.
-              <a href="https://fliple.org" style={{ color: '#fff', marginLeft: 5, fontWeight: 'bold' }}>
+              Swapping on Fliple is disabled. <br />
+              <a
+                href="https://fliple.org"
+                style={{ color: '#fff', marginTop: 5, fontWeight: 'bold', display: 'inline-block' }}
+              >
                 Learn more
               </a>
             </p>
